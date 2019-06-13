@@ -66,26 +66,8 @@ class jetmetUncertaintiesProducer(Module):
         self.jesArchive.extractall(self.jesInputFilePath)
         
         if len(jesUncertainties) == 1 and jesUncertainties[0] == "Total":
-            # if self.era == "2016":
-            #     self.jesUncertaintyInputFileName = "Summer16_07Aug2017_V11_MC_Uncertainty_" + jetType + ".txt"    # Latest is Summer16_07Aug2017_V11 but affected by Formula Evaluator bug
-            # elif self.era == "2017":
-            #     self.jesUncertaintyInputFileName = "Fall17_17Nov2017_V32_MC_Uncertainty_" + jetType + ".txt"
-            # elif self.era == "2018":
-            #     self.jesUncertaintyInputFileName = "Autumn18_V8_MC_Uncertainty_" + jetType + ".txt"
-            # else:
-            #     raise ValueError("ERROR: Invalid era = '%s'!" % self.era)
-
             self.jesUncertaintyInputFileName = globalTag + "_Uncertainty_" + jetType + ".txt"
         else:
-            # if self.era == "2016":
-            #     self.jesUncertaintyInputFileName = "Summer16_07Aug2017_V11_MC_UncertaintySources_" + jetType + ".txt" # Latest is Summer16_07Aug2017_V11 but affected by Formula Evaluator bug
-            # elif self.era == "2017":
-            #     self.jesUncertaintyInputFileName = "Fall17_17Nov2017_V32_MC_UncertaintySources_" + jetType + ".txt"
-            # elif self.era == "2018":
-            #     self.jesUncertaintyInputFileName = "Autumn18_V8_MC_UncertaintySources_" + jetType + ".txt"
-            # else:
-            #     raise ValueError("ERROR: Invalid era = '%s'!" % self.era)
-
             self.jesUncertaintyInputFileName = globalTag + "_UncertaintySources_" + jetType + ".txt"
 
         # read all uncertainty source names from the loaded file
