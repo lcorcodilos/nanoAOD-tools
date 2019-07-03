@@ -388,8 +388,8 @@ class jetmetUncertaintiesProducer(Module):
             self.out.fillBranch("%s_phi_jerDown" % self.metBranchName, math.atan2(met_py_jerDown, met_px_jerDown))
             
         for jesUncertainty in self.jesUncertainties:
-            self.out.fillBranch("%s_corr_JES%sUp" % (self.jetBranchName, jesUncertainty), jets_corr_JES_up[jesUncertainty])
-            self.out.fillBranch("%s_corr_JES%sDown" % (self.jetBranchName, jesUncertainty), jets_corr_JES_down[jesUncertainty])
+            self.out.fillBranch("%s_corr_JES_%sUp" % (self.jetBranchName, jesUncertainty), jets_corr_JES_up[jesUncertainty])
+            self.out.fillBranch("%s_corr_JES_%sDown" % (self.jetBranchName, jesUncertainty), jets_corr_JES_down[jesUncertainty])
 
             if self.corrMET:
                 self.out.fillBranch("%s_pt_jes%sUp" % (self.metBranchName, jesUncertainty), math.sqrt(met_px_jesUp[jesUncertainty]**2 + met_py_jesUp[jesUncertainty]**2))
