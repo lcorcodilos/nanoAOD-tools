@@ -146,7 +146,7 @@ class jetmetUncertaintiesProducer(Module):
             self.out.branch("%s_msoftdrop_raw" % self.jetBranchName, "F", lenVar=self.lenVar)
             self.out.branch("%s_msoftdrop_nom" % self.jetBranchName, "F", lenVar=self.lenVar)
             self.out.branch("%s_groomed_corr_JMR_nom" % self.jetBranchName, "F", lenVar=self.lenVar)
-            self.out.branch("%s_groomed_corr_PUPPI_nom" % self.jetBranchName, "F", lenVar=self.lenVar)
+            self.out.branch("%s_groomed_corr_PUPPI" % self.jetBranchName, "F", lenVar=self.lenVar)
             self.out.branch("%s_groomed_corr_JMR_up" % self.jetBranchName, "F", lenVar=self.lenVar)
             self.out.branch("%s_groomed_corr_JMR_down" % self.jetBranchName, "F", lenVar=self.lenVar)
 
