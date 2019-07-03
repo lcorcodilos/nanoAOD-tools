@@ -197,8 +197,8 @@ class jetmetUncertaintiesProducer(Module):
             jets_corr_JES_down[jesUncertainty] = []
 
         if self.doGroomed:
-            jets_msdcorr_raw = []
-            jets_msdcorr_nom = []
+            jets_msoftdrop_raw = []
+            jets_msoftdrop_nom = []
 
             jets_groomed_corr_JMR_nom = []
             jets_groomed_corr_PUPPI = []
@@ -251,7 +251,7 @@ class jetmetUncertaintiesProducer(Module):
                 else :
                     groomedP4 = None
 
-                jets_msdcorr_raw.append(0.0) if groomedP4 == None else jets_msdcorr_raw.append(groomedP4.M())
+                jets_msoftdrop_raw.append(0.0) if groomedP4 == None else jets_msoftdrop_raw.append(groomedP4.M())
 
                 # LC: Apply PUPPI SD mass correction https://github.com/cms-jet/PuppiSoftdropMassCorr/
                 puppisd_genCorr = self.puppisd_corrGEN.Eval(jet.pt)
@@ -266,7 +266,7 @@ class jetmetUncertaintiesProducer(Module):
                     groomedP4.SetPtEtaPhiM(groomedP4.Perp(), groomedP4.Eta(), groomedP4.Phi(), groomedP4.M()*puppisd_total)
 
                 jets_groomed_corr_PUPPI.append(puppisd_total)
-                jets_msdcorr_nom.append(0.0) if groomedP4 == None else jets_msdcorr_nom.append(groomedP4.M()*puppisd_total)
+                jets_msoftdrop_nom.append(0.0) if groomedP4 == None else jets_msoftdrop_nom.append(groomedP4.M()*puppisd_total)
 
             # evaluate JER scale factors and uncertainties
             # (cf. https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution and https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyResolution )
@@ -371,12 +371,12 @@ class jetmetUncertaintiesProducer(Module):
 
                    
         if self.doGroomed :
-            self.out.fillBranch("%s_groomed_corr_JMR_nom" % self.jetBranchName, jets_corr_JMR_nom)
-            self.out.fillBranch("%s_groomed_corr_JMR_up" % self.jetBranchName, jets_corr_JMR_up)
-            self.out.fillBranch("%s_groomed_corr_JMR_down" % self.jetBranchName, jets_corr_JMR_down)
-            self.out.fillBranch("%s_groomed_corr_PUPPI" % self.jetBranchName, jets_msdcorr_corr_PUPPI)
-            self.out.fillBranch("%s_msoftdrop_raw" % self.jetBranchName, jets_msdcorr_raw)
-            self.out.fillBranch("%s_msoftdrop_nom" % self.jetBranchName, jets_msdcorr_nom)
+            self.out.fillBranch("%s_groomed_corr_JMR_nom" % self.jetBranchName, jets_groomed_corr_JMR_nom)
+            self.out.fillBranch("%s_groomed_corr_JMR_up" % self.jetBranchName, jets_groomed_corr_JMR_up)
+            self.out.fillBranch("%s_groomed_corr_JMR_down" % self.jetBranchName, jets_groomed_corr_JMR_down)
+            self.out.fillBranch("%s_groomed_corr_PUPPI" % self.jetBranchName, jets_groomed_corr_PUPPI)
+            self.out.fillBranch("%s_msoftdrop_raw" % self.jetBranchName, jets_msoftdrop_raw)
+            self.out.fillBranch("%s_msoftdrop_nom" % self.jetBranchName, jets_msoftdrop_nom)
 
             
         if self.corrMET :
