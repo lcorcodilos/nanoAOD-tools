@@ -150,8 +150,9 @@ class jetmetUncertaintiesProducer(Module):
             self.out.branch("%s_groomed_corr_JMR_up" % self.jetBranchName, "F", lenVar=self.lenVar)
             self.out.branch("%s_groomed_corr_JMR_down" % self.jetBranchName, "F", lenVar=self.lenVar)
 
-        for jesUncertainty in self.jesUncertainties:
-            self.out.branch("%s_corr_JES_%s%s" % (self.jetBranchName, jesUncertainty, shift), "F", lenVar=self.lenVar)
+        for shift in [ "Up", "Down" ]:
+            for jesUncertainty in self.jesUncertainties:
+                self.out.branch("%s_corr_JES_%s%s" % (self.jetBranchName, jesUncertainty, shift), "F", lenVar=self.lenVar)
             # if self.doGroomed:
                 # self.out.branch("%s_groomed_corr_JES_%s%s" % (self.jetBranchName, jesUncertainty, shift), "F", lenVar=self.lenVar)
             
