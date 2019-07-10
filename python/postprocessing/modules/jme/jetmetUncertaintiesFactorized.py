@@ -266,7 +266,7 @@ class jetmetUncertaintiesProducer(Module):
                     groomedP4.SetPtEtaPhiM(groomedP4.Perp(), groomedP4.Eta(), groomedP4.Phi(), groomedP4.M()*puppisd_total)
 
                 jets_groomed_corr_PUPPI.append(puppisd_total)
-                jets_msoftdrop_nom.append(0.0) if groomedP4 == None else jets_msoftdrop_nom.append(groomedP4.M()*puppisd_total)
+                jets_msoftdrop_nom.append(0.0) if groomedP4 == None else jets_msoftdrop_nom.append(groomedP4.M())
 
             # evaluate JER scale factors and uncertainties
             # (cf. https://twiki.cern.ch/twiki/bin/view/CMS/JetResolution and https://twiki.cern.ch/twiki/bin/view/CMSPublic/WorkBookJetEnergyResolution )
