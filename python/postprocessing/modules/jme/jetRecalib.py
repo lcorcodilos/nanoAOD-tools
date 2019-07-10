@@ -67,6 +67,7 @@ class jetRecalib(Module):
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         jets = Collection(event, self.jetBranchName )
+        subJets = Collection(event, self.subJetBranchName )
         met = Object(event, "MET") 
 
         jets_pt_raw = []
