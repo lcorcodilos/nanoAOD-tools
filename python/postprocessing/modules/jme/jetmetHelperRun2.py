@@ -52,9 +52,9 @@ jmrValues = {'2016' : [1.0, 1.2, 0.8],
 #jet mass scale
 #W-tagging PUPPI softdrop JMS values: https://twiki.cern.ch/twiki/bin/view/CMS/JetWtagging
 #2016 values 
-jmsValues = { '2016' : [1.00, 0.9906, 1.0094], #nominal, down, up
-              '2017' : [0.982, 0.978, 0.986],
-              '2018' : [0.997, 0.993, 1.001]
+jmsValues = { '2016' : [1.00, 1.0094, 0.9906], #nominal, up, down
+              '2017' : [0.982, 0.986, 0.978],
+              '2018' : [0.997, 1.001, 0.993]
             }
 
 def createJMECorrector(isMC=True, dataYear=2016, runPeriod="B", jesUncert="Total", redojec=False, jetType = "AK4PFchs", noGroom=False, metBranchName="MET", applySmearing=True, isFastSim=False):
