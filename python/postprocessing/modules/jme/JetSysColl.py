@@ -68,7 +68,7 @@ class JetSysObj:
         return self.idx >= other.idx
 
     def __str__(self) :
-        s = ' (%6.2f,%4.2f,%4.2f,%6.2f : %6.2f)' % ( self.p4_.Perp(), self.p4_.Eta(), self.p4_.Phi(), self.p4_.M(), self.msd_ )
+        s = ' (%6.2f,%4.2f,%4.2f,%6.2f : %6.2f)' % ( self.p4_.Pt(), self.p4_.Eta(), self.p4_.Phi(), self.p4_.M(), self.msd_ )
         return s
     
 

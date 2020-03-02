@@ -92,9 +92,9 @@ class jetSmearer(Module):
         #
         #--------------------------------------------------------------------------------------------
 
-        if not (jet.Perp() > 0.):
-            print("WARNING: jet pT = %1.1f !!" % jet.Perp())
-            return ( jet.Perp(), jet.Perp(), jet.Perp() )
+        if not (jet.Pt() > 0.):
+            print("WARNING: jet pT = %1.1f !!" % jet.Pt())
+            return ( jet.Pt(), jet.Pt(), jet.Pt() )
         
         #--------------------------------------------------------------------------------------------
         # CV: define enums needed to access JER scale factors and uncertainties
@@ -116,17 +116,17 @@ class jetSmearer(Module):
               #
               # Case 1: we have a "good" generator level jet matched to the reconstructed jet
               #
-              dPt = jet.Perp() - genJet.Perp()
-              smearFactor = 1. + (jet_pt_sf_and_uncertainty[central_or_shift] - 1.)*dPt/jet.Perp()
+              dPt = jet.Pt() - genJet.Pt()
+              smearFactor = 1. + (jet_pt_sf_and_uncertainty[central_or_shift] - 1.)*dPt/jet.Pt()
               
               # check that smeared jet energy remains positive,
               # as the direction of the jet would change ("flip") otherwise - and this is not what we want
-              if (smearFactor*jet.Perp()) < 1.e-2:
+              if (smearFactor*jet.Pt()) < 1.e-2:
                 smearFactor = 1.e-2
               smear_vals[central_or_shift] = smearFactor
               
         else:
-          self.params_resolution.setJetPt(jet.Perp())
+          self.params_resolution.setJetPt(jet.Pt())
           self.params_resolution.setJetEta(jet.Eta())
           self.params_resolution.setRho(rho)
           jet_pt_resolution = self.jer.getResolution(self.params_resolution)
@@ -147,7 +147,7 @@ class jetSmearer(Module):
             
             # check that smeared jet energy remains positive,
             # as the direction of the jet would change ("flip") otherwise - and this is not what we want
-            if (smearFactor*jet.Perp()) < 1.e-2:
+            if (smearFactor*jet.Pt()) < 1.e-2:
                 smearFactor = 1.e-2
             smear_vals[central_or_shift] = smearFactor
         

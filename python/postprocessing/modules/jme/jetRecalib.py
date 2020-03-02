@@ -132,7 +132,7 @@ class jetRecalib(Module):
 
             puppisd_total = puppisd_genCorr * puppisd_recoCorr
             if groomedP4 != None:
-                groomedP4.SetPtEtaPhiM(groomedP4.Perp(), groomedP4.Eta(), groomedP4.Phi(), groomedP4.M()*puppisd_total)
+                groomedP4.SetPtEtaPhiM(groomedP4.Pt(), groomedP4.Eta(), groomedP4.Phi(), groomedP4.M()*puppisd_total)
 
             jets_groomed_corr_PUPPI.append(puppisd_total)
             jets_msoftdrop_nom.append(0.0) if groomedP4 == None else jets_msoftdrop_nom.append(groomedP4.M())

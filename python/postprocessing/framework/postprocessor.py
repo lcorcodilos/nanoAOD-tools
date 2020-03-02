@@ -201,8 +201,8 @@ class PostProcessor :
 		if toBeDeleted: os.unlink(ftoread)
 		
 	for m in self.modules: m.endJob()
-	
-	print  totEntriesRead/(time.clock()-t0), "Hz"
+
+        if time.clock()-t0 > 0:	print totEntriesRead/(time.clock()-t0), "Hz"
 
 
 	if self.haddFileName :
