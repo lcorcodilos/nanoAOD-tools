@@ -27,7 +27,7 @@ class mhtProducer(Module):
         muons = Collection(event, "Muon")
         jets = Collection(event, "Jet")
         njets = len(jets)
-        mht = ROOT.TLorentzVector()
+        mht = ROOT.Math.PtEtaPhiMVector(0.0,0.0,0.0,0.0)
         for lep in filter(self.muSel,muons):
             mht += lep.p4()
         for lep in filter(self.elSel,electrons):

@@ -284,12 +284,11 @@ class jetmetUncertaintiesProducer(Module):
               genJet = pairs[jet]
             
             # get the jet for type-1 MET
-            newjet = ROOT.TLorentzVector()
             if self.isV5NanoAOD:
-                newjet.SetPtEtaPhiM(jet_pt_orig*(1-jet.rawFactor)*(1-jet.muonSubtrFactor), jet.eta, jet.phi, jet.mass )
+                newjet = ROOT.Math.PtEtaPhiMVector(jet_pt_orig*(1-jet.rawFactor)*(1-jet.muonSubtrFactor), jet.eta, jet.phi, jet.mass )
                 muon_pt = jet_pt_orig*(1-jet.rawFactor)*jet.muonSubtrFactor
             else:
-                newjet.SetPtEtaPhiM(jet_pt_orig*(1-jet.rawFactor), jet.eta, jet.phi, jet.mass )
+                newjet = ROOT.Math.PtEtaPhiMVector(jet_pt_orig*(1-jet.rawFactor), jet.eta, jet.phi, jet.mass )
                 muon_pt = 0
                 if hasattr(jet, 'muonIdx1'):
                   if jet.muonIdx1>-1:

@@ -65,11 +65,10 @@ class Object:
     def __getitem__(self,attr):
         return self.__getattr__(attr)
     def p4(self):
-        ret = ROOT.TLorentzVector()
-        ret.SetPtEtaPhiM(self.pt,self.eta,self.phi,self.mass)
+        ret = ROOT.Math.PtEtaPhiMVector(self.pt,self.eta,self.phi,self.mass)
         return ret
     def DeltaR(self,other):
-        if isinstance(other,ROOT.TLorentzVector):
+        if isinstance(other,ROOT.Math.LorentzVector):
           deta = abs(other.Eta()-self.eta)
           dphi = abs(other.Phi()-self.phi)
         else:
