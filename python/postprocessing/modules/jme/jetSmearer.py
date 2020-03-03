@@ -73,7 +73,6 @@ class jetSmearer(Module):
         
     
     def getSmearValsPt(self, jetIn, genJetIn, rho):
-        
         if hasattr( jetIn, "p4"):
             jet = jetIn.p4()
         else:
@@ -112,44 +111,44 @@ class jetSmearer(Module):
         
         smear_vals = {}
         if genJet:
-          for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
-              #
-              # Case 1: we have a "good" generator level jet matched to the reconstructed jet
-              #
-              dPt = jet.Pt() - genJet.Pt()
-              smearFactor = 1. + (jet_pt_sf_and_uncertainty[central_or_shift] - 1.)*dPt/jet.Pt()
+            for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
+                #
+                # Case 1: we have a "good" generator level jet matched to the reconstructed jet
+                #
+                dPt = jet.Pt() - genJet.Pt()
+                smearFactor = 1. + (jet_pt_sf_and_uncertainty[central_or_shift] - 1.)*dPt/jet.Pt()
               
-              # check that smeared jet energy remains positive,
-              # as the direction of the jet would change ("flip") otherwise - and this is not what we want
-              if (smearFactor*jet.Pt()) < 1.e-2:
-                smearFactor = 1.e-2
-              smear_vals[central_or_shift] = smearFactor
+                # check that smeared jet energy remains positive,
+                # as the direction of the jet would change ("flip") otherwise - and this is not what we want
+                if (smearFactor*jet.Pt()) < 1.e-2:
+                    smearFactor = 1.e-2
+                smear_vals[central_or_shift] = smearFactor
               
         else:
-          self.params_resolution.setJetPt(jet.Pt())
-          self.params_resolution.setJetEta(jet.Eta())
-          self.params_resolution.setRho(rho)
-          jet_pt_resolution = self.jer.getResolution(self.params_resolution)
+            self.params_resolution.setJetPt(jet.Pt())
+            self.params_resolution.setJetEta(jet.Eta())
+            self.params_resolution.setRho(rho)
+            jet_pt_resolution = self.jer.getResolution(self.params_resolution)
           
-          rand = self.rnd.Gaus(0,jet_pt_resolution)
-          for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
-            if jet_pt_sf_and_uncertainty[central_or_shift] > 1.:
-              #
-              # Case 2: we don't have a generator level jet. Smear jet pT using a random Gaussian variation
-              #
-              smearFactor = 1. + rand * math.sqrt(jet_pt_sf_and_uncertainty[central_or_shift]**2 - 1.)
-            else:
-              #
-              # Case 3: we cannot smear this jet, as we don't have a generator level jet and the resolution in data is better than the resolution in the simulation,
-              #         so we would need to randomly "unsmear" the jet, which is impossible
-              #
-              smearFactor = 1.
+            rand = self.rnd.Gaus(0,jet_pt_resolution)
+            for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
+                if jet_pt_sf_and_uncertainty[central_or_shift] > 1.:
+                    #
+                    # Case 2: we don't have a generator level jet. Smear jet pT using a random Gaussian variation
+                    #
+                    smearFactor = 1. + rand * math.sqrt(jet_pt_sf_and_uncertainty[central_or_shift]**2 - 1.)
+                else:
+                    #
+                    # Case 3: we cannot smear this jet, as we don't have a generator level jet and the resolution in data is better than the resolution in the simulation,
+                    #         so we would need to randomly "unsmear" the jet, which is impossible
+                    #
+                    smearFactor = 1.
             
-            # check that smeared jet energy remains positive,
-            # as the direction of the jet would change ("flip") otherwise - and this is not what we want
-            if (smearFactor*jet.Pt()) < 1.e-2:
-                smearFactor = 1.e-2
-            smear_vals[central_or_shift] = smearFactor
+                # check that smeared jet energy remains positive,
+                # as the direction of the jet would change ("flip") otherwise - and this is not what we want
+                if (smearFactor*jet.Pt()) < 1.e-2:
+                    smearFactor = 1.e-2
+                smear_vals[central_or_shift] = smearFactor
         
         return ( smear_vals[enum_nominal], smear_vals[enum_shift_up], smear_vals[enum_shift_down] )
         
@@ -186,52 +185,52 @@ class jetSmearer(Module):
         # CV: define enums needed to access JER scale factors and uncertainties
         #    (cf. CondFormats/JetMETObjects/interface/JetResolutionObject.h) 
         enum_nominal         = 0
-        enum_shift_up        = 2
-        enum_shift_down      = 1
+        enum_shift_up        = 1
+        enum_shift_down      = 2
         #--------------------------------------------------------------------------------------------
         
         jet_m_sf_and_uncertainty = dict( zip( [enum_nominal, enum_shift_up, enum_shift_down], self.jmr_vals ) )
         
         smear_vals = {}
         if genJet:
-          for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
-              #
-              # Case 1: we have a "good" generator level jet matched to the reconstructed jet
-              #
-              dM = jet.M() - genJet.M()
-              smearFactor = 1. + (jet_m_sf_and_uncertainty[central_or_shift] - 1.)*dM/jet.M()
+            for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
+                #
+                # Case 1: we have a "good" generator level jet matched to the reconstructed jet
+                #
+                dM = jet.M() - genJet.M()
+                smearFactor = 1. + (jet_m_sf_and_uncertainty[central_or_shift] - 1.)*dM/jet.M()
               
-              # check that smeared jet energy remains positive,
-              # as the direction of the jet would change ("flip") otherwise - and this is not what we want
-              if (smearFactor*jet.M()) < 1.e-2:
-                smearFactor = 1.e-2
-              smear_vals[central_or_shift] = smearFactor
+                # check that smeared jet energy remains positive,
+                # as the direction of the jet would change ("flip") otherwise - and this is not what we want
+                if (smearFactor*jet.M()) < 1.e-2:
+                    smearFactor = 1.e-2
+                smear_vals[central_or_shift] = smearFactor
             
         else:        
-          # Get mass resolution
-          if abs(jet.Eta()) <= 1.3:
-            jet_m_resolution = self.puppisd_resolution_cen.Eval( jet.Pt() )
-          else:
-            jet_m_resolution = self.puppisd_resolution_for.Eval( jet.Pt() )
-          rand = self.rnd.Gaus(0,jet_m_resolution)
-          for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
-            if jet_m_sf_and_uncertainty[central_or_shift] > 1.:
-              #
-              # Case 2: we don't have a generator level jet. Smear jet m using a random Gaussian variation
-              #
-              smearFactor = rand * math.sqrt(jet_m_sf_and_uncertainty[central_or_shift]**2 - 1.)
+            # Get mass resolution
+            if abs(jet.Eta()) <= 1.3:
+                jet_m_resolution = self.puppisd_resolution_cen.Eval( jet.Pt() )
             else:
-              #
-              # Case 3: we cannot smear this jet, as we don't have a generator level jet and the resolution in data is better than the resolution in the simulation,
-              #         so we would need to randomly "unsmear" the jet, which is impossible
-              #
-              smearFactor = 1.
+                jet_m_resolution = self.puppisd_resolution_for.Eval( jet.Pt() )
+            rand = self.rnd.Gaus(0,jet_m_resolution)
+            for central_or_shift in [ enum_nominal, enum_shift_up, enum_shift_down ]:
+                if jet_m_sf_and_uncertainty[central_or_shift] > 1.:
+                    #
+                    # Case 2: we don't have a generator level jet. Smear jet m using a random Gaussian variation
+                    #
+                    smearFactor = rand * math.sqrt(jet_m_sf_and_uncertainty[central_or_shift]**2 - 1.)
+                else:
+                    #
+                    # Case 3: we cannot smear this jet, as we don't have a generator level jet and the resolution in data is better than the resolution in the simulation,
+                    #         so we would need to randomly "unsmear" the jet, which is impossible
+                    #
+                    smearFactor = 1.
             
-            # check that smeared jet energy remains positive,
-            # as the direction of the jet would change ("flip") otherwise - and this is not what we want
-            if (smearFactor*jet.M()) < 1.e-2:
-               smearFactor = 1.e-2
-            smear_vals[central_or_shift] = smearFactor
+                # check that smeared jet energy remains positive,
+                # as the direction of the jet would change ("flip") otherwise - and this is not what we want
+                if (smearFactor*jet.M()) < 1.e-2:
+                    smearFactor = 1.e-2
+                smear_vals[central_or_shift] = smearFactor
         
         return ( smear_vals[enum_nominal], smear_vals[enum_shift_up], smear_vals[enum_shift_down] )
     
