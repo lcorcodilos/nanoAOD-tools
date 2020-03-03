@@ -13,18 +13,18 @@ def deltaPhi(phi1,phi2):
     while dphi < -pi: dphi += 2*pi
     return dphi
 
-def deltaR(eta1,phi1,eta2=None,phi2=None):
-    ## catch if called with objects
-    if eta2 == None:
-        return deltaR(eta1.eta,eta1.phi,phi1.eta,phi1.phi)
-    ## otherwise
-    return hypot(eta1-eta2, deltaPhi(phi1,phi2))
+# def deltaR(eta1,phi1,eta2=None,phi2=None):
+#     ## catch if called with objects
+#     if eta2 == None:
+#         return deltaR(eta1.eta,eta1.phi,phi1.eta,phi1.phi)
+#     ## otherwise
+#     return hypot(eta1-eta2, deltaPhi(phi1,phi2))
 
 def closest(obj,collection,presel=lambda x,y: True):
     ret = None; drMin = 999
     for x in collection:
         if not presel(obj,x): continue
-        dr = deltaR(obj,x)
+        dr = obj.DeltaR(x)
         if dr < drMin: 
             ret = x; drMin = dr
     return (ret,drMin)
@@ -52,7 +52,7 @@ def matchObjectCollectionMultiple(objs,collection,dRmax=0.4,presel=lambda x,y: T
     for obj in objs:
         matched = [] 
         for c in collection :
-            if presel(obj,c) and deltaR( obj, c ) < dRmax :
+            if presel(obj,c) and obj.DeltaR(c) < dRmax :
                 matched.append( c )
         pairs[obj] = matched
     return pairs

@@ -258,7 +258,7 @@ class fatJetUncertaintiesProducer(Module):
                     groomedP4_nom = ROOT.Math.PtEtaPhiMVector(0,0,0,0)
                     for isj in [jet.subJetIdx1,jet.subJetIdx2]:
                         sj = subJets[isj]
-                        if hasattr(jet, "rawFactor"):
+                        if hasattr(sj, "rawFactor"):
                             sj_rawpt = sj.pt * (1 - sj.rawFactor)
                             sj_rawmass = sj.mass * (1 - sj.rawFactor)
                         else: 
@@ -297,7 +297,6 @@ class fatJetUncertaintiesProducer(Module):
             #################################################################
             if not self.isData:
                 genJet = pairs[jet] 
-
                 #######
                 # JER #
                 #######
@@ -344,7 +343,7 @@ class fatJetUncertaintiesProducer(Module):
                 # Groomed variations of JMR, JMS #
                 ##################################
                 if self.doGroomed :
-                    # Get matched gen jets if MC
+                    # Get matched gen jets if MC 
                     genGroomedSubJets = genSubJetMatcher[genJet] if genJet != None else None
                     genGroomedJet = genGroomedSubJets[0].p4() + genGroomedSubJets[1].p4() if genGroomedSubJets != None and len(genGroomedSubJets) >= 2 else None
 
@@ -359,8 +358,8 @@ class fatJetUncertaintiesProducer(Module):
                     #######
                     # Evaluate JMR scale factors and uncertainties
                     groomedP4_corr = groomedP4_raw # Eventually has PUPPI SD mass correction and JMS correction for JMR calculation
-                    if groomedP4_corr != None: groomedP4_corr.SetM(groomedP4_raw.M()*puppisd_total*jet_corr_jmsNomVal)
-                    ( jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal ) = self.jetSmearer.getSmearValsM(groomedP4_corr, genGroomedJet) if groomedP4_corr != None and genGroomedJet != None else (0.,0.,0.)
+                    if groomedP4_corr != None: groomedP4_corr.SetM(groomedP4_corr.M()*puppisd_total*jet_corr_jmsNomVal)
+                    ( jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal ) = self.jetSmearer.getSmearValsM(groomedP4_corr, genGroomedJet) if (groomedP4_corr != None and genGroomedJet != None) else (1.,1.,1.)
 
                     jets_msdcorr_corr_JMR.append(jet_msdcorr_jmrNomVal)
                     jets_msdcorr_corr_JMR_up.append(jet_msdcorr_jmrUpVal)
