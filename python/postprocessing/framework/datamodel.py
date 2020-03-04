@@ -68,10 +68,10 @@ class Object:
         ret = ROOT.Math.PtEtaPhiMVector(self.pt,self.eta,self.phi,self.mass)
         return ret
     def DeltaR(self,other):
-        if isinstance(other,ROOT.Math.LorentzVector):
-            return ROOT.Math.VectorUtil.DeltaR(self.p4(),other)
-        else:
+        if hasattr(other,"p4"):
             return ROOT.Math.VectorUtil.DeltaR(self.p4(),other.p4())
+        else:
+            return ROOT.Math.VectorUtil.DeltaR(self.p4(),other)
             # deta = abs(other.eta-self.eta)
             # dphi = abs(other.phi-self.phi)
             # while dphi > math.pi:

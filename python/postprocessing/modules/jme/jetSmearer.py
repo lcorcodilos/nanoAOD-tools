@@ -179,7 +179,7 @@ class jetSmearer(Module):
         
         if not (jet.M() > 0.):
             print("WARNING: jet m = %1.1f !!" % jet.M())
-            return ( jet.M(), jet.M(), jet.M() )
+            return ( 1,1,1)# jet.M(), jet.M(), jet.M() )
         
         #--------------------------------------------------------------------------------------------
         # CV: define enums needed to access JER scale factors and uncertainties

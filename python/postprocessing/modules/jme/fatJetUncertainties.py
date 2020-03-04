@@ -268,8 +268,8 @@ class fatJetUncertaintiesProducer(Module):
                         sj_raw_vect = ROOT.Math.PtEtaPhiMVector(sj_rawpt,sj.eta,sj.phi,sj_rawmass)
                         sj_nom_vect = ROOT.Math.PtEtaPhiMVector(sj.pt,sj.eta,sj.phi,sj.mass)
 
-                    groomedP4_raw = groomedP4_raw + sj_raw_vect 
-                    groomedP4_nom = groomedP4_nom + sj_nom_vect 
+                        groomedP4_raw = groomedP4_raw + sj_raw_vect 
+                        groomedP4_nom = groomedP4_nom + sj_nom_vect 
                 else :
                     groomedP4_raw = None
                     groomedP4_nom = None
@@ -296,7 +296,8 @@ class fatJetUncertaintiesProducer(Module):
             # Do other corrections, smearing, and uncertainties if not data #
             #################################################################
             if not self.isData:
-                genJet = pairs[jet] 
+                genJet = pairs[jet]
+                
                 #######
                 # JER #
                 #######
@@ -357,8 +358,8 @@ class fatJetUncertaintiesProducer(Module):
                     # JMR #
                     #######
                     # Evaluate JMR scale factors and uncertainties
-                    groomedP4_corr = groomedP4_raw # Eventually has PUPPI SD mass correction and JMS correction for JMR calculation
-                    if groomedP4_corr != None: groomedP4_corr.SetM(groomedP4_corr.M()*puppisd_total*jet_corr_jmsNomVal)
+                    if groomedP4_raw != None: groomedP4_corr = ROOT.Math.PtEtaPhiMVector(groomedP4_raw.Pt(),groomedP4_raw.Eta(),groomedP4_raw.Phi(),groomedP4_raw.M()*puppisd_total*jet_corr_jmsNomVal) # Eventually has PUPPI SD mass correction and JMS correction for JMR calculation
+                    else: groomedP4_corr = None
                     ( jet_msdcorr_jmrNomVal, jet_msdcorr_jmrUpVal, jet_msdcorr_jmrDownVal ) = self.jetSmearer.getSmearValsM(groomedP4_corr, genGroomedJet) if (groomedP4_corr != None and genGroomedJet != None) else (1.,1.,1.)
 
                     jets_msdcorr_corr_JMR.append(jet_msdcorr_jmrNomVal)
@@ -382,7 +383,7 @@ class fatJetUncertaintiesProducer(Module):
                         jets_msdcorr_tau21DDT_jmsUpVal = 1.010
                         self.jetSmearer.jmr_vals = [1.124,1.208,1.040]
 
-                    ( jet_msdcorr_tau21DDT_jmrNomVal, jet_msdcorr_tau21DDT_jmrUpVal, jet_msdcorr_tau21DDT_jmrDownVal ) = self.jetSmearer.getSmearValsM(groomedP4_corr, genGroomedJet) if groomedP4_corr != None and genGroomedJet != None else (0.,0.,0.)
+                    ( jet_msdcorr_tau21DDT_jmrNomVal, jet_msdcorr_tau21DDT_jmrUpVal, jet_msdcorr_tau21DDT_jmrDownVal ) = self.jetSmearer.getSmearValsM(groomedP4_corr, genGroomedJet) if groomedP4_corr != None and genGroomedJet != None else (1.,1.,1.)
 
                     jets_msdcorr_tau21DDT_corr_JMR.append(jet_msdcorr_tau21DDT_jmrNomVal)
                     jets_msdcorr_tau21DDT_corr_JMR_up.append(jet_msdcorr_tau21DDT_jmrUpVal)
